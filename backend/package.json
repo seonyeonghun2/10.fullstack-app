@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon ./app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "10.fullstack-app": "file:..",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mongodb": "^6.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
