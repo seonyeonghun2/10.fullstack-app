@@ -5,11 +5,10 @@ const client = new MongoClient(uri);
 export async function readUsers() {
   try {
     await client.connect();
-    const db = client.db("sample_mflix");
-    const coll = db.collection("movies");
-    const cursor = coll.find().limit(10); // document: 사용자 정보 10개 제한 (총 21,349개)
+    const db = client.db("hr");
+    const coll = db.collection("employees");
+    const cursor = coll.find(); // .limit(10) - 사용자 정보 10개 제한 (총 21,349개)
     const users = await cursor.toArray();
-    // console.log(typeof users, users);
     return users;
   } catch (e) {
     console.log(e);
