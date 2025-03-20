@@ -4,26 +4,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 function AddEmployee() {
   const [validated, setValidated] = useState(false);
+
   const handleSubmit = (e) => {
-    const form = e.currentTarget;
     e.preventDefault();
+    const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.stopPropagation();
-    } else {
-      setValidated(true);
-      addEmployee();
     }
-
+    setValidated(true);
+    addEmployee();
   };
   const addEmployee = async () => {
     await axios
       .post('http://localhost:3000/employees', {
-        data: {
-          employee_id: 101,
-          first_name: '홍',
-          last_name: '길동',
-          hire_date: '2025-03-19',
-        },
+        employee_id: document.querySelector('#EmpId').value,
+        first_name: document.querySelector('#EmpFirstName').value,
+        last_name: document.querySelector('#EmpLastName').value,
+        hire_date: document.querySelector('#EmpHireDate').value,
       })
       .then(function (response) {
         console.log(response);
@@ -38,22 +35,22 @@ function AddEmployee() {
         <Col>
           <h1 className="text-center my-3">사원등록</h1>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="EmdId">
+            <Form.Group className="mb-3" controlId="EmpId">
               <Form.Label>사번</Form.Label>
               <Form.Control type="number" placeholder="사번을 입력하세요" required />
               <Form.Text className="text-muted">
                 추후 사번은 자동 생성되어 부여될 예정입니다.
               </Form.Text>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="EmdFirstName">
+            <Form.Group className="mb-3" controlId="EmpFirstName">
               <Form.Label>성</Form.Label>
               <Form.Control type="text" placeholder="성 을 입력하세요" required />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="EmdLastName">
+            <Form.Group className="mb-3" controlId="EmpLastName">
               <Form.Label>이름</Form.Label>
               <Form.Control type="text" placeholder="이름을 입력하세요" required />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="EmdHireDate">
+            <Form.Group className="mb-3" controlId="EmpHireDate">
               <Form.Label>입사일</Form.Label>
               <Form.Control type="date" placeholder="입사일을 선택하세요" required />
               <Form.Text className="text-muted">
