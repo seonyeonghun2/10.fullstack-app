@@ -7,17 +7,19 @@ import ModifyEmployee from '../components/ModifyEmployee';
 function ListEmployees() {
   const [employees, setEmployees] = useState([]);
   const [isModalShow, setIsModalShow] = useState(false);
+  const [editEmployee, setEditEmployee] = useState(null)
   const getEmployees = async () => {
     const data = await axios.get('http://localhost:3000/employees');
     // fetch() : json parse 직접 ==> response.json() 호출
     // axios() : json 자동으로 parse ==> state에 바로 담으면 됨
-    console.log(data);
+    // console.log(data);
     setEmployees(data.data); // setEmployees(data)
   };
   useEffect(() => {
     getEmployees();
   }, []);
-  const handleEdit = () => {
+  const handleEdit = (e) => {
+    setEditEmployee(employees[e.target.dataset.id])
     setIsModalShow((prevState) => !prevState);
   };
   const handleDelete = async (e) => {
@@ -32,7 +34,7 @@ function ListEmployees() {
   };
   return (
     <>
-      {isModalShow && <ModifyEmployee />}
+      {isModalShow && <ModifyEmployee editEmployee={editEmployee} />}
       <Container>
         <Row>
           <Col>
@@ -54,7 +56,7 @@ function ListEmployees() {
                 </tr>
               </thead>
               <tbody>
-                {employees.map((emp) => (
+                {employees.map((emp, i) => (
                   <tr key={emp._id}>
                     <td className="text-center">{emp.employee_id}</td>
                     <td className="text-center">
@@ -72,7 +74,7 @@ function ListEmployees() {
                     </td>
                     <td className="d-flex gap-1 justify-content-center">
                       {/* 수정 버튼 클릭시 employees에서 특정 employee를 필터링해서 Modal 컴포넌트에 props로 전달*/}
-                      <Button onClick={handleEdit}>수정</Button>
+                      <Button onClick={handleEdit} data-id={i}>수정</Button>
                       <Button className="btn-danger" onClick={handleDelete} data-emp-id={emp._id}>
                         삭제
                       </Button>
