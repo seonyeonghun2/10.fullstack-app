@@ -1,15 +1,13 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 // Replace the uri string with your MongoDB deployment's connection string.
 const uri = "mongodb+srv://demouser:demo1234@cluster0.t0bqn.mongodb.net/";
 const client = new MongoClient(uri);
 export async function deleteUser(target) {
-  console.log(target);
   try {
     await client.connect();
     const db = client.db("hr");
-    const coll = db.collection("employees");
-    const result = await coll.deleteOne(target);
-    console.log(result)
+    const coll = db.collection("employees");    
+    const result = await coll.deleteOne({_id: new ObjectId(target._id)});    
     return result;
   } catch (e) {
     console.log(e);
