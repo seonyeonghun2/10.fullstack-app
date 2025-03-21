@@ -43,7 +43,6 @@ app.put("/employees/:id", (req, res) => {
   res.send("Update Users");
 });
 app.delete("/employees/:id", async (req, res) => {
-  console.log("삭제요청 params : ", req.params);
   try {
     const result = await deleteUser({_id: req.params.id});
     res.status(201).json({
