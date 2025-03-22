@@ -23,7 +23,7 @@ app.get("/employees", async (req, res) => {
   }
 });
 app.post("/employees", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   // res.send("Create Users");
   try {
     const result = await createUser(req.body);
