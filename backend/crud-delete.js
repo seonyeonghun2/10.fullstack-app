@@ -7,7 +7,24 @@ export async function deleteUser(target) {
     await client.connect();
     const db = client.db("hr");
     const coll = db.collection("employees");    
-    const result = await coll.deleteOne({_id: new ObjectId(target._id)});    
+    // const result = await coll.deleteOne({_id: new ObjectId(target._id)});  
+    // ID 문자열을 ObjectId로 변환
+    const objectId = new ObjectId(target._id);
+    console.log(typeof objectId);
+    // 변환된 ObjectId로 문서 찾기 시도
+    const docToDelete = await coll.findOne({ _id: objectId });
+    console.log("Document to delete:", docToDelete);
+    if (!docToDelete) {
+      console.log("문서를 찾을 수 없습니다. ID가 정확한지 확인하세요.");
+      return {
+        acknowledged: true,
+        deletedCount: 0,
+        message: "문서를 찾을 수 없음",
+      };
+    }
+
+    const result = await coll.deleteOne({ _id: objectId });
+    console.log("Delete result:", result);  
     return result;
   } catch (e) {
     console.log(e);
