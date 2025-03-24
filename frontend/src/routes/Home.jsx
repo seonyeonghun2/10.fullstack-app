@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Link, Outlet } from 'react-router';
+import { NavLink, Outlet } from 'react-router';
 function Home() {
   const navUl = {
     listStyle: 'none',
@@ -18,16 +18,16 @@ function Home() {
               <nav>
                 <ul className="d-flex justify-content-around" style={navUl}>
                   <li>
-                    <Link to="/home">처음으로</Link>
+                    <NavLink to="/home">처음으로</NavLink>
                   </li>
                   <li>
-                    <Link to="/list">사원목록</Link>
+                    <NavLink to="/list">사원목록</NavLink>
                   </li>
                   <li>
-                    <Link to="/add">사원등록</Link>
+                    <NavLink to="/add">사원등록</NavLink>
                   </li>
                   <li>
-                    <Link to="/news">새소식</Link>
+                    <NavLink to="/news">새소식</NavLink>
                   </li>
                 </ul>
               </nav>
@@ -39,7 +39,13 @@ function Home() {
         <Outlet />
       </main>
       <footer>
-        <p>&copy; 한울ERP</p>
+        <Container>
+          <Row>
+            <Col>
+              <p className='text-center bg-dark text-white py-2'>&copy; 한울ERP</p>
+            </Col>
+          </Row>
+        </Container>
       </footer>
     </>
   );
