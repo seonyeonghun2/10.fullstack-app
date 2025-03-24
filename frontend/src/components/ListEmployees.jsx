@@ -34,7 +34,7 @@ function ListEmployees() {
   };
   return (
     <>
-      {isModalShow && <ModifyEmployee editEmployee={editEmployee} />}
+      {isModalShow && <ModifyEmployee editEmployee={editEmployee} setIsModalShow={setIsModalShow} />}
       <Container>
         <Row>
           <Col>

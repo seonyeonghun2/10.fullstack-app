@@ -3,6 +3,7 @@ import cors from "cors";
 import { readUsers } from "./crud-read.js";
 import { createUser } from "./crud-create.js";
 import { deleteUser } from "./crud-delete.js";
+import { updateUser } from "./crud-update.js";
 const app = express();
 const port = 3000;
 // Built-in Middleware : 요청-응답 사이에 실행되는 특별한 함수
@@ -39,8 +40,24 @@ app.post("/employees", async (req, res) => {
     });
   }
 });
-app.put("/employees/:id", (req, res) => {
-  res.send("Update Users");
+app.put("/employees/:id", async (req, res) => {
+  // console.log(req.params.id); // 수정할 도큐먼트 id --> ObjectId
+  // console.log(req.body);
+  try {
+    const result = await updateUser({
+      id: req.params.id,
+      data : req.body
+    })
+    // 정상적이면 응답
+    res.status(201).json(result)
+  } catch (e) {
+    // 아니면 예외처리, 500번 에러 응답
+    console.log(e)
+    res.status(501).json({
+      status: 'update fail',
+      message: '업데이트 요청 처리 실패, 관리자에게 문의하세요!'
+    })
+  }
 });
 app.delete("/employees/:id", async (req, res) => {
   try {
