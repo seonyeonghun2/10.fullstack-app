@@ -2,6 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import { NavLink, Outlet } from 'react-router';
+import result from '../assets/result.png'
 function Home() {
   const navUl = {
     listStyle: 'none',
@@ -36,6 +37,11 @@ function Home() {
         </Container>
       </header>
       <main>
+        <Container>
+          <Row>
+            <Col><img src={result} alt="result" /></Col>
+          </Row>
+        </Container>
         <Outlet />
       </main>
       <footer>
