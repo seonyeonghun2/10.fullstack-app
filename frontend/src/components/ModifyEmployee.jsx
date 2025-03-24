@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Container, Row, Col, Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-function ModifyExmployee({editEmployee}) {
-  console.log(editEmployee);
+function ModifyExmployee({editEmployee, setIsModalShow}) {
+  // console.log(editEmployee);
   const [validated, setValidated] = useState(false);
   const [formData, setFormData] = useState({
     _id: editEmployee._id,
@@ -16,6 +16,9 @@ function ModifyExmployee({editEmployee}) {
     position: 'fixed',
     zIndex: 999,
   };
+  const handleModalClose = () => {
+    setIsModalShow(false);
+  }
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -40,7 +43,10 @@ function ModifyExmployee({editEmployee}) {
         hire_date: formData.hiredate,
       })
       .then(function (response) {
-        console.log(response);
+        if (response.data.matchedCount === 1) {
+          alert("업데이트 성공! 목록 페이지로 이동합니다");
+          location.href='/list'
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -50,7 +56,7 @@ function ModifyExmployee({editEmployee}) {
   return (
     <div className="modal show" style={modalStyle}>
       <Modal.Dialog fullscreen={true}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton onClick={handleModalClose}>
           <Modal.Title>사원정보 수정</Modal.Title>
         </Modal.Header>
 
@@ -83,8 +89,8 @@ function ModifyExmployee({editEmployee}) {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary">Close</Button>
-          <Button variant="primary">Save changes</Button>
+          <Button variant="secondary" onClick={handleModalClose}>닫기</Button>
+          <Button variant="primary">임시저장</Button>
         </Modal.Footer>
       </Modal.Dialog>
     </div>
